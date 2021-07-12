@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_DODAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_anhsanpham">
+          <Key>
+            <PropertyRef Name="id_anhsanpham" />
+          </Key>
+          <Property Name="id_anhsanpham" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fk_sanpham" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_image" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_chitietdonhang">
+          <Key>
+            <PropertyRef Name="id_chitietdonhang" />
+          </Key>
+          <Property Name="id_chitietdonhang" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fk_donhang" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fk_sanpham" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_soluong" Type="int" Nullable="false" />
+          <Property Name="c_dongia" Type="real" Nullable="false" />
+          <Property Name="c_thanhtien" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_danhmucsanpham">
+          <Key>
+            <PropertyRef Name="id_danhmucsanpham" />
+          </Key>
+          <Property Name="id_danhmucsanpham" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_tendanhmuc" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_donhang">
+          <Key>
+            <PropertyRef Name="id_donhang" />
+          </Key>
+          <Property Name="id_donhang" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fk_khachhang" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_ngaymua" Type="datetime" Nullable="false" />
+          <Property Name="c_gia" Type="real" Nullable="false" />
+          <Property Name="c_trangthai" Type="bit" Nullable="false" />
+          <Property Name="c_ghichu" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_khachhang">
+          <Key>
+            <PropertyRef Name="id_khachhang" />
+          </Key>
+          <Property Name="id_khachhang" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_tenkhachhang" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_diachi" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="c_sodienthoai" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_sanpham">
+          <Key>
+            <PropertyRef Name="id_sanpham" />
+          </Key>
+          <Property Name="id_sanpham" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_tensanpham" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="fk_danhmucsanpham" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_gia" Type="real" Nullable="false" />
+          <Property Name="c_thongtinchitiet" Type="nvarchar(max)" />
+          <Property Name="c_sanphamhot" Type="bit" />
+          <Property Name="c_sanphamkhuyenmai" Type="bit" />
+          <Property Name="c_soluong" Type="int" Nullable="false" />
+          <Property Name="c_mota" Type="nvarchar(max)" />
+          <Property Name="c_ngaytao" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_slide">
+          <Key>
+            <PropertyRef Name="id_slide" />
+          </Key>
+          <Property Name="id_slide" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_image1" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="c_image2" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="c_image3" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_tintuc">
+          <Key>
+            <PropertyRef Name="id_tintuc" />
+          </Key>
+          <Property Name="id_tintuc" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="c_tieude" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="c_mota" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="c_chitiet" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="c_image" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="c_account" />
+          </Key>
+          <Property Name="c_account" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="c_password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_anhsanpham_tbl_sanpham">
+          <End Role="tbl_sanpham" Type="Self.tbl_sanpham" Multiplicity="1" />
+          <End Role="tbl_anhsanpham" Type="Self.tbl_anhsanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_sanpham">
+              <PropertyRef Name="id_sanpham" />
+            </Principal>
+            <Dependent Role="tbl_anhsanpham">
+              <PropertyRef Name="fk_sanpham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_chitietdonhang_tbl_donhang">
+          <End Role="tbl_donhang" Type="Self.tbl_donhang" Multiplicity="1" />
+          <End Role="tbl_chitietdonhang" Type="Self.tbl_chitietdonhang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_donhang">
+              <PropertyRef Name="id_donhang" />
+            </Principal>
+            <Dependent Role="tbl_chitietdonhang">
+              <PropertyRef Name="fk_donhang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_chitietdonhang_tbl_sanpham">
+          <End Role="tbl_sanpham" Type="Self.tbl_sanpham" Multiplicity="1" />
+          <End Role="tbl_chitietdonhang" Type="Self.tbl_chitietdonhang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_sanpham">
+              <PropertyRef Name="id_sanpham" />
+            </Principal>
+            <Dependent Role="tbl_chitietdonhang">
+              <PropertyRef Name="fk_sanpham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_donhang_tbl_khachhang">
+          <End Role="tbl_khachhang" Type="Self.tbl_khachhang" Multiplicity="1" />
+          <End Role="tbl_donhang" Type="Self.tbl_donhang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_khachhang">
+              <PropertyRef Name="id_khachhang" />
+            </Principal>
+            <Dependent Role="tbl_donhang">
+              <PropertyRef Name="fk_khachhang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_sanpham_tbl_danhmucsanpham">
+          <End Role="tbl_danhmucsanpham" Type="Self.tbl_danhmucsanpham" Multiplicity="1" />
+          <End Role="tbl_sanpham" Type="Self.tbl_sanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_danhmucsanpham">
+              <PropertyRef Name="id_danhmucsanpham" />
+            </Principal>
+            <Dependent Role="tbl_sanpham">
+              <PropertyRef Name="fk_danhmucsanpham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_DODAModelStoreContainer">
+          <EntitySet Name="tbl_anhsanpham" EntityType="Self.tbl_anhsanpham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_chitietdonhang" EntityType="Self.tbl_chitietdonhang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_danhmucsanpham" EntityType="Self.tbl_danhmucsanpham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_donhang" EntityType="Self.tbl_donhang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_khachhang" EntityType="Self.tbl_khachhang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_sanpham" EntityType="Self.tbl_sanpham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_slide" EntityType="Self.tbl_slide" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_tintuc" EntityType="Self.tbl_tintuc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_anhsanpham_tbl_sanpham" Association="Self.FK_tbl_anhsanpham_tbl_sanpham">
+            <End Role="tbl_sanpham" EntitySet="tbl_sanpham" />
+            <End Role="tbl_anhsanpham" EntitySet="tbl_anhsanpham" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_chitietdonhang_tbl_donhang" Association="Self.FK_tbl_chitietdonhang_tbl_donhang">
+            <End Role="tbl_donhang" EntitySet="tbl_donhang" />
+            <End Role="tbl_chitietdonhang" EntitySet="tbl_chitietdonhang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_chitietdonhang_tbl_sanpham" Association="Self.FK_tbl_chitietdonhang_tbl_sanpham">
+            <End Role="tbl_sanpham" EntitySet="tbl_sanpham" />
+            <End Role="tbl_chitietdonhang" EntitySet="tbl_chitietdonhang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_donhang_tbl_khachhang" Association="Self.FK_tbl_donhang_tbl_khachhang">
+            <End Role="tbl_khachhang" EntitySet="tbl_khachhang" />
+            <End Role="tbl_donhang" EntitySet="tbl_donhang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_sanpham_tbl_danhmucsanpham" Association="Self.FK_tbl_sanpham_tbl_danhmucsanpham">
+            <End Role="tbl_danhmucsanpham" EntitySet="tbl_danhmucsanpham" />
+            <End Role="tbl_sanpham" EntitySet="tbl_sanpham" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_DODAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_anhsanpham">
+          <Key>
+            <PropertyRef Name="id_anhsanpham" />
+          </Key>
+          <Property Name="id_anhsanpham" Type="Guid" Nullable="false" />
+          <Property Name="fk_sanpham" Type="Guid" Nullable="false" />
+          <Property Name="c_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_sanpham" Relationship="Self.FK_tbl_anhsanpham_tbl_sanpham" FromRole="tbl_anhsanpham" ToRole="tbl_sanpham" />
+        </EntityType>
+        <EntityType Name="tbl_chitietdonhang">
+          <Key>
+            <PropertyRef Name="id_chitietdonhang" />
+          </Key>
+          <Property Name="id_chitietdonhang" Type="Guid" Nullable="false" />
+          <Property Name="fk_donhang" Type="Guid" Nullable="false" />
+          <Property Name="fk_sanpham" Type="Guid" Nullable="false" />
+          <Property Name="c_soluong" Type="Int32" Nullable="false" />
+          <Property Name="c_dongia" Type="Single" Nullable="false" />
+          <Property Name="c_thanhtien" Type="Single" Nullable="false" />
+          <NavigationProperty Name="tbl_donhang" Relationship="Self.FK_tbl_chitietdonhang_tbl_donhang" FromRole="tbl_chitietdonhang" ToRole="tbl_donhang" />
+          <NavigationProperty Name="tbl_sanpham" Relationship="Self.FK_tbl_chitietdonhang_tbl_sanpham" FromRole="tbl_chitietdonhang" ToRole="tbl_sanpham" />
+        </EntityType>
+        <EntityType Name="tbl_danhmucsanpham">
+          <Key>
+            <PropertyRef Name="id_danhmucsanpham" />
+          </Key>
+          <Property Name="id_danhmucsanpham" Type="Guid" Nullable="false" />
+          <Property Name="c_tendanhmuc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_sanpham" Relationship="Self.FK_tbl_sanpham_tbl_danhmucsanpham" FromRole="tbl_danhmucsanpham" ToRole="tbl_sanpham" />
+        </EntityType>
+        <EntityType Name="tbl_donhang">
+          <Key>
+            <PropertyRef Name="id_donhang" />
+          </Key>
+          <Property Name="id_donhang" Type="Guid" Nullable="false" />
+          <Property Name="fk_khachhang" Type="Guid" Nullable="false" />
+          <Property Name="c_ngaymua" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="c_gia" Type="Single" Nullable="false" />
+          <Property Name="c_trangthai" Type="Boolean" Nullable="false" />
+          <Property Name="c_ghichu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_chitietdonhang" Relationship="Self.FK_tbl_chitietdonhang_tbl_donhang" FromRole="tbl_donhang" ToRole="tbl_chitietdonhang" />
+          <NavigationProperty Name="tbl_khachhang" Relationship="Self.FK_tbl_donhang_tbl_khachhang" FromRole="tbl_donhang" ToRole="tbl_khachhang" />
+        </EntityType>
+        <EntityType Name="tbl_khachhang">
+          <Key>
+            <PropertyRef Name="id_khachhang" />
+          </Key>
+          <Property Name="id_khachhang" Type="Guid" Nullable="false" />
+          <Property Name="c_tenkhachhang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_diachi" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_sodienthoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_donhang" Relationship="Self.FK_tbl_donhang_tbl_khachhang" FromRole="tbl_khachhang" ToRole="tbl_donhang" />
+        </EntityType>
+        <EntityType Name="tbl_sanpham">
+          <Key>
+            <PropertyRef Name="id_sanpham" />
+          </Key>
+          <Property Name="id_sanpham" Type="Guid" Nullable="false" />
+          <Property Name="c_tensanpham" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fk_danhmucsanpham" Type="Guid" Nullable="false" />
+          <Property Name="c_gia" Type="Single" Nullable="false" />
+          <Property Name="c_thongtinchitiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_sanphamhot" Type="Boolean" />
+          <Property Name="c_sanphamkhuyenmai" Type="Boolean" />
+          <Property Name="c_soluong" Type="Int32" Nullable="false" />
+          <Property Name="c_mota" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="c_ngaytao" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_anhsanpham" Relationship="Self.FK_tbl_anhsanpham_tbl_sanpham" FromRole="tbl_sanpham" ToRole="tbl_anhsanpham" />
+          <NavigationProperty Name="tbl_chitietdonhang" Relationship="Self.FK_tbl_chitietdonhang_tbl_sanpham" FromRole="tbl_sanpham" ToRole="tbl_chitietdonhang" />
+          <NavigationProperty Name="tbl_danhmucsanpham" Relationship="Self.FK_tbl_sanpham_tbl_danhmucsanpham" FromRole="tbl_sanpham" ToRole="tbl_danhmucsanpham" />
+        </EntityType>
+        <EntityType Name="tbl_slide">
+          <Key>
+            <PropertyRef Name="id_slide" />
+          </Key>
+          <Property Name="id_slide" Type="Guid" Nullable="false" />
+          <Property Name="c_image1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_image2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_image3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_tintuc">
+          <Key>
+            <PropertyRef Name="id_tintuc" />
+          </Key>
+          <Property Name="id_tintuc" Type="Guid" Nullable="false" />
+          <Property Name="c_tieude" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_mota" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_chitiet" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="c_account" />
+          </Key>
+          <Property Name="c_account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="c_password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbl_anhsanpham_tbl_sanpham">
+          <End Role="tbl_sanpham" Type="Self.tbl_sanpham" Multiplicity="1" />
+          <End Role="tbl_anhsanpham" Type="Self.tbl_anhsanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_sanpham">
+              <PropertyRef Name="id_sanpham" />
+            </Principal>
+            <Dependent Role="tbl_anhsanpham">
+              <PropertyRef Name="fk_sanpham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_chitietdonhang_tbl_donhang">
+          <End Role="tbl_donhang" Type="Self.tbl_donhang" Multiplicity="1" />
+          <End Role="tbl_chitietdonhang" Type="Self.tbl_chitietdonhang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_donhang">
+              <PropertyRef Name="id_donhang" />
+            </Principal>
+            <Dependent Role="tbl_chitietdonhang">
+              <PropertyRef Name="fk_donhang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_chitietdonhang_tbl_sanpham">
+          <End Role="tbl_sanpham" Type="Self.tbl_sanpham" Multiplicity="1" />
+          <End Role="tbl_chitietdonhang" Type="Self.tbl_chitietdonhang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_sanpham">
+              <PropertyRef Name="id_sanpham" />
+            </Principal>
+            <Dependent Role="tbl_chitietdonhang">
+              <PropertyRef Name="fk_sanpham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_sanpham_tbl_danhmucsanpham">
+          <End Role="tbl_danhmucsanpham" Type="Self.tbl_danhmucsanpham" Multiplicity="1" />
+          <End Role="tbl_sanpham" Type="Self.tbl_sanpham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_danhmucsanpham">
+              <PropertyRef Name="id_danhmucsanpham" />
+            </Principal>
+            <Dependent Role="tbl_sanpham">
+              <PropertyRef Name="fk_danhmucsanpham" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_donhang_tbl_khachhang">
+          <End Role="tbl_khachhang" Type="Self.tbl_khachhang" Multiplicity="1" />
+          <End Role="tbl_donhang" Type="Self.tbl_donhang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_khachhang">
+              <PropertyRef Name="id_khachhang" />
+            </Principal>
+            <Dependent Role="tbl_donhang">
+              <PropertyRef Name="fk_khachhang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_DODAEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_anhsanpham" EntityType="Self.tbl_anhsanpham" />
+          <EntitySet Name="tbl_chitietdonhang" EntityType="Self.tbl_chitietdonhang" />
+          <EntitySet Name="tbl_danhmucsanpham" EntityType="Self.tbl_danhmucsanpham" />
+          <EntitySet Name="tbl_donhang" EntityType="Self.tbl_donhang" />
+          <EntitySet Name="tbl_khachhang" EntityType="Self.tbl_khachhang" />
+          <EntitySet Name="tbl_sanpham" EntityType="Self.tbl_sanpham" />
+          <EntitySet Name="tbl_slide" EntityType="Self.tbl_slide" />
+          <EntitySet Name="tbl_tintuc" EntityType="Self.tbl_tintuc" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+          <AssociationSet Name="FK_tbl_anhsanpham_tbl_sanpham" Association="Self.FK_tbl_anhsanpham_tbl_sanpham">
+            <End Role="tbl_sanpham" EntitySet="tbl_sanpham" />
+            <End Role="tbl_anhsanpham" EntitySet="tbl_anhsanpham" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_chitietdonhang_tbl_donhang" Association="Self.FK_tbl_chitietdonhang_tbl_donhang">
+            <End Role="tbl_donhang" EntitySet="tbl_donhang" />
+            <End Role="tbl_chitietdonhang" EntitySet="tbl_chitietdonhang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_chitietdonhang_tbl_sanpham" Association="Self.FK_tbl_chitietdonhang_tbl_sanpham">
+            <End Role="tbl_sanpham" EntitySet="tbl_sanpham" />
+            <End Role="tbl_chitietdonhang" EntitySet="tbl_chitietdonhang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_sanpham_tbl_danhmucsanpham" Association="Self.FK_tbl_sanpham_tbl_danhmucsanpham">
+            <End Role="tbl_danhmucsanpham" EntitySet="tbl_danhmucsanpham" />
+            <End Role="tbl_sanpham" EntitySet="tbl_sanpham" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_donhang_tbl_khachhang" Association="Self.FK_tbl_donhang_tbl_khachhang">
+            <End Role="tbl_khachhang" EntitySet="tbl_khachhang" />
+            <End Role="tbl_donhang" EntitySet="tbl_donhang" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_DODAModelStoreContainer" CdmEntityContainer="DB_DODAEntities1">
+          <EntitySetMapping Name="tbl_anhsanpham">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_anhsanpham">
+              <MappingFragment StoreEntitySet="tbl_anhsanpham">
+                <ScalarProperty Name="id_anhsanpham" ColumnName="id_anhsanpham" />
+                <ScalarProperty Name="fk_sanpham" ColumnName="fk_sanpham" />
+                <ScalarProperty Name="c_image" ColumnName="c_image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_chitietdonhang">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_chitietdonhang">
+              <MappingFragment StoreEntitySet="tbl_chitietdonhang">
+                <ScalarProperty Name="id_chitietdonhang" ColumnName="id_chitietdonhang" />
+                <ScalarProperty Name="fk_donhang" ColumnName="fk_donhang" />
+                <ScalarProperty Name="fk_sanpham" ColumnName="fk_sanpham" />
+                <ScalarProperty Name="c_soluong" ColumnName="c_soluong" />
+                <ScalarProperty Name="c_dongia" ColumnName="c_dongia" />
+                <ScalarProperty Name="c_thanhtien" ColumnName="c_thanhtien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_danhmucsanpham">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_danhmucsanpham">
+              <MappingFragment StoreEntitySet="tbl_danhmucsanpham">
+                <ScalarProperty Name="id_danhmucsanpham" ColumnName="id_danhmucsanpham" />
+                <ScalarProperty Name="c_tendanhmuc" ColumnName="c_tendanhmuc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_donhang">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_donhang">
+              <MappingFragment StoreEntitySet="tbl_donhang">
+                <ScalarProperty Name="id_donhang" ColumnName="id_donhang" />
+                <ScalarProperty Name="fk_khachhang" ColumnName="fk_khachhang" />
+                <ScalarProperty Name="c_ngaymua" ColumnName="c_ngaymua" />
+                <ScalarProperty Name="c_gia" ColumnName="c_gia" />
+                <ScalarProperty Name="c_trangthai" ColumnName="c_trangthai" />
+                <ScalarProperty Name="c_ghichu" ColumnName="c_ghichu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_khachhang">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_khachhang">
+              <MappingFragment StoreEntitySet="tbl_khachhang">
+                <ScalarProperty Name="id_khachhang" ColumnName="id_khachhang" />
+                <ScalarProperty Name="c_tenkhachhang" ColumnName="c_tenkhachhang" />
+                <ScalarProperty Name="c_diachi" ColumnName="c_diachi" />
+                <ScalarProperty Name="c_sodienthoai" ColumnName="c_sodienthoai" />
+                <ScalarProperty Name="c_email" ColumnName="c_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_sanpham">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_sanpham">
+              <MappingFragment StoreEntitySet="tbl_sanpham">
+                <ScalarProperty Name="id_sanpham" ColumnName="id_sanpham" />
+                <ScalarProperty Name="c_tensanpham" ColumnName="c_tensanpham" />
+                <ScalarProperty Name="fk_danhmucsanpham" ColumnName="fk_danhmucsanpham" />
+                <ScalarProperty Name="c_gia" ColumnName="c_gia" />
+                <ScalarProperty Name="c_thongtinchitiet" ColumnName="c_thongtinchitiet" />
+                <ScalarProperty Name="c_sanphamhot" ColumnName="c_sanphamhot" />
+                <ScalarProperty Name="c_sanphamkhuyenmai" ColumnName="c_sanphamkhuyenmai" />
+                <ScalarProperty Name="c_soluong" ColumnName="c_soluong" />
+                <ScalarProperty Name="c_mota" ColumnName="c_mota" />
+                <ScalarProperty Name="c_ngaytao" ColumnName="c_ngaytao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_slide">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_slide">
+              <MappingFragment StoreEntitySet="tbl_slide">
+                <ScalarProperty Name="id_slide" ColumnName="id_slide" />
+                <ScalarProperty Name="c_image1" ColumnName="c_image1" />
+                <ScalarProperty Name="c_image2" ColumnName="c_image2" />
+                <ScalarProperty Name="c_image3" ColumnName="c_image3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_tintuc">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_tintuc">
+              <MappingFragment StoreEntitySet="tbl_tintuc">
+                <ScalarProperty Name="id_tintuc" ColumnName="id_tintuc" />
+                <ScalarProperty Name="c_tieude" ColumnName="c_tieude" />
+                <ScalarProperty Name="c_mota" ColumnName="c_mota" />
+                <ScalarProperty Name="c_chitiet" ColumnName="c_chitiet" />
+                <ScalarProperty Name="c_image" ColumnName="c_image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="DB_DODAModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="c_account" ColumnName="c_account" />
+                <ScalarProperty Name="c_password" ColumnName="c_password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
